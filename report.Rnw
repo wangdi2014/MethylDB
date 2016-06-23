@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{longtable}
+\title{DMR report}
+\author{\Sexpr{user()}}
+\begin{document}
+
+\maketitle
+
+<<setup, include=FALSE>>=
+  library(knitr)
+# in this document we mainly use results='asis', so set it globally
+opts_chunk$set(results='asis')
+@
+
+Genomic regions that are called DMR bumpers, and we only select top \Sexpr{input$topk} Differential Bumper of our bumper object, extract through default null distribution of $area = \sum_{i \in R_j} \beta_i$
+
+<<eval=TRUE,echo=FALSE>>=
+dmrdb = paste("data", paste0("dmrs_gap", input$maxGap, ".Rda"), sep = "/")
+dmr_report <- get(load(dmrdb))
+res = as.data.frame(dmr_report[1:input$topk,c(1,5)])
+res <- res[c(-3,-5)]
+@
+
+\section{Top \Sexpr{input$topk} DMRs}
+<<test-a>>=
+if(input$topk <= 40){
+  kable(res)
+}else{
+  r = 1
+  while(r < input$topk){
+    t <- if(r+40-1 < input$topk){
+      r+40-1
+    }else{
+      input$topk
+    }
+    kable(res[r:t,])
+    r = r + 40
+  }
+}
+@
+
+These are \Sexpr{input$topk} Differential Region with lowest p value, ans these implies that CpG sites clustered in these regions has highest correlation. 
+
+\end{document}

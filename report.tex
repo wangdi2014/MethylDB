@@ -1,0 +1,134 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{booktabs}
+\usepackage{longtable}
+\title{DMR report}
+\author{ruichaohou}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+
+Genomic regions that are called DMR bumpers, and we only select top 20 Differential Bumper of our bumper object, extract through default null distribution of $area = \sum_{i \in R_j} \beta_i$
+
+
+
+\section{Top 20 DMRs}
+\begin{kframe}
+\begin{alltt}
+\hlkwa{if}\hlstd{(input}\hlopt{$}\hlstd{topk} \hlopt{<=} \hlnum{40}\hlstd{)\{}
+  \hlkwd{kable}\hlstd{(res)}
+\hlstd{\}}\hlkwa{else}\hlstd{\{}
+  \hlstd{r} \hlkwb{=} \hlnum{1}
+  \hlkwa{while}\hlstd{(r} \hlopt{<} \hlstd{input}\hlopt{$}\hlstd{topk)\{}
+    \hlstd{t} \hlkwb{<-} \hlkwa{if}\hlstd{(r}\hlopt{+}\hlnum{40}\hlopt{-}\hlnum{1} \hlopt{<} \hlstd{input}\hlopt{$}\hlstd{topk)\{}
+      \hlstd{r}\hlopt{+}\hlnum{40}\hlopt{-}\hlnum{1}
+    \hlstd{\}}\hlkwa{else}\hlstd{\{}
+      \hlstd{input}\hlopt{$}\hlstd{topk}
+    \hlstd{\}}
+    \hlkwd{kable}\hlstd{(res[r}\hlopt{:}\hlstd{t,])}
+    \hlstd{r} \hlkwb{=} \hlstd{r} \hlopt{+} \hlnum{40}
+  \hlstd{\}}
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\begin{tabular}{l|r|r|r|r}
+\hline
+seqnames & start & width & beta0 & pvalue\\
+\hline
+chr10 & 134597884 & 4647 & 2.335 & 0\\
+\hline
+chr12 & 4380025 & 4866 & 1.794 & 0\\
+\hline
+chr6 & 29520965 & 839 & 2.376 & 0\\
+\hline
+chr6 & 29973669 & 1759 & 1.694 & 0\\
+\hline
+chr13 & 78492306 & 1762 & 1.837 & 0\\
+\hline
+chr16 & 51183988 & 4775 & 1.995 & 0\\
+\hline
+chr10 & 135049208 & 2797 & 1.699 & 0\\
+\hline
+chr11 & 2160055 & 2491 & 1.453 & 0\\
+\hline
+chr18 & 74960629 & 2166 & 2.297 & 0\\
+\hline
+chr6 & 29893273 & 1903 & 1.720 & 0\\
+\hline
+chr17 & 35289677 & 5375 & 1.916 & 0\\
+\hline
+chr6 & 28602543 & 1237 & 1.873 & 0\\
+\hline
+chr6 & 33160067 & 2440 & 1.586 & 0\\
+\hline
+chr2 & 63280625 & 6664 & 1.862 & 0\\
+\hline
+chr6 & 30094947 & 856 & 2.126 & 0\\
+\hline
+chr6 & 30038712 & 1189 & 1.469 & 0\\
+\hline
+chr14 & 29234671 & 2810 & 2.127 & 0\\
+\hline
+chr7 & 79081455 & 2742 & 2.023 & 0\\
+\hline
+chr3 & 147125114 & 3044 & 1.708 & 0\\
+\hline
+chr14 & 36985711 & 5391 & 2.094 & 0\\
+\hline
+\end{tabular}
+
+
+These are 20 Differential Region with lowest p value, ans these implies that CpG sites clustered in these regions has highest correlation. 
+
+\end{document}
